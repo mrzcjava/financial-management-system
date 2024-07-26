@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      password: ${jx.datasource.password}
+      username: ${jx.datasource.username}
+      driver-class-name: ${jx.datasource.driver-class-name}
+      url:  jdbc:mysql://${jx.datasource.host}:${jx.datasource.port}/${jx.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+  redis:
+    host: ${jx.redis.host}
+    port: ${jx.redis.port}
+    password: ${jx.redis.password}
+    database: ${jx.redis.database}
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.main.pojo
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      main:
+        mapper: debug
+        service: info
+        controller: info
+knife4j:
+  enable: true

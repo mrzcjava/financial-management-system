@@ -1,0 +1,26 @@
+jx:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: 192.168.200.130
+    port: 3306
+    database: jx
+    username: root
+    password: root
+  alioss:
+    access-key-id: LTAI5tM91v4vu8vcDnBTYn9u
+    access-key-secret: mXIJpPxmnVFRmn9UpNlREaf8u5zyPT
+    bucket-name: sky-take-out-acj
+    endpoint: oss-cn-beijing.aliyuncs.com
+  redis:
+    host: 192.168.200.130
+    port: 6379
+    password: 123456
+    database: 10
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: jx
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+

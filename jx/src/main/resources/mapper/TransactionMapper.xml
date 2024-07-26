@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.main.mapper.TransactionMapper">
+    <select id="queryPage" resultType="com.main.pojo.entity.Transaction">
+        select * from transaction
+        <where>
+            <if test="status != null">
+                status = #{status}
+            </if>
+            <if test="beginTime != null and endTime != null">
+                between #{beginTime} and #{endTime}
+            </if>
+            <if test="self != null">
+                e_id = #{self}
+            </if>
+            <if test="keyword != null">
+                like #{keyword}
+            </if>
+        </where>
+
+    </select>
+</mapper>

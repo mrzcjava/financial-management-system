@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.main.mapper.UserMapper">
+    <insert id="addNewUser">
+        insert into user values(
+            <if test="uId != null">
+                #{uId},
+            </if>
+            <if test="eId != null">
+                #{eId},
+            </if>
+            <if test="icon != null">
+                #{icon},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="role != null">
+                #{role},
+            </if>
+        )
+    </insert>
+
+    <select id="queryUserById" resultType="com.main.pojo.entity.User">
+        select * from user where u_id=#{username}
+    </select>
+</mapper>
