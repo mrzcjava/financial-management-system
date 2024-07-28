@@ -44,4 +44,10 @@ public class TransactionController {
     public Result<Object> unpass(@PathVariable String tid){
         return transactionService.unpass(tid);
     }
+
+    @ApiOperation("获取所有信息")
+    @GetMapping
+    public Result<Object> get(){
+        return transactionService.get();
+    }
 }

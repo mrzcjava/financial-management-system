@@ -8,18 +8,18 @@ import com.main.mapper.TransactionMapper;
 import com.main.pojo.dto.AddTransactionDTO;
 import com.main.pojo.dto.SearchTransactionDTO;
 import com.main.pojo.entity.Transaction;
+import com.main.pojo.vo.MonthDataVO;
+import com.main.pojo.vo.SectorDataVO;
+import com.main.pojo.vo.SummeryDataVO;
 import com.main.properties.AliOssProperties;
 import com.main.result.Result;
 import com.main.service.TransactionService;
-import com.main.utils.AliOssUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -67,5 +67,19 @@ public class TransactionServiceImpl implements TransactionService {
     public Result<Object> unpass(String tid) {
         transactionMapper.unpass(tid);
         return Result.success();
+    }
+
+    @Override
+    public Result<Object> get() {
+        List<MonthDataVO> monthDate = transactionMapper.getMonth();
+        List<SectorDataVO> monthSector = transactionMapper.getMonthSector();
+        List<MonthDataVO> seasonData = transactionMapper.getSeasonData();
+        List<SectorDataVO> seasonSector = transactionMapper.getSeasonSector();
+        SummeryDataVO vo = SummeryDataVO.builder()
+                .seasonData(seasonData)
+                .monthSector(monthSector)
+                .seasonSector(seasonSector)
+                .monthData(monthDate).build();
+        return Result.success(vo);
     }
 }

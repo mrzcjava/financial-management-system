@@ -35,4 +35,56 @@
         </where>
 
     </select>
+    <select id="getMonthSector" resultMap="SectorDataResultMap">
+        select sector,sum(spend) as spend from transaction
+        where DATE_FORMAT(begin_time, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m')
+        group by sector;
+    </select>
+
+    <select id="getMonth" resultMap="MonthDataResultMap">
+        SELECT DATE(begin_time) AS date, sum(spend) as spend
+        FROM transaction
+        WHERE MONTH(begin_time) = MONTH(CURRENT_DATE)
+        AND YEAR(begin_time) = YEAR(CURRENT_DATE)
+        GROUP BY DATE(begin_time)
+        ORDER BY date;
+    </select>
+    <select id="getSeasonData" resultMap="MonthDataResultMap">
+        <![CDATA[
+        SELECT
+        DATE_FORMAT(begin_time, '%Y-%m') AS date,
+        SUM(spend) AS spend
+        FROM
+        transaction
+        WHERE
+        begin_time >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)
+        AND begin_time < DATE_ADD(DATE_FORMAT(CURRENT_DATE, '%Y-%m-01'), INTERVAL 1 MONTH)
+        GROUP BY
+        DATE_FORMAT(begin_time, '%Y-%m')
+        ORDER BY
+        date;
+        ]]>
+    </select>
+    <select id="getSeasonSector" resultMap="SectorDataResultMap">
+        <![CDATA[
+        SELECT
+        sector,
+        SUM(spend) AS spend
+        FROM
+        transaction
+        WHERE
+        begin_time >= DATE_SUB(CURRENT_DATE, INTERVAL 2 MONTH)
+        AND begin_time < DATE_ADD(DATE_FORMAT(CURRENT_DATE, '%Y-%m-01'), INTERVAL 1 MONTH)
+        GROUP BY
+        sector;
+        ]]>
+    </select>
+    <resultMap id="SectorDataResultMap" type="com.main.pojo.vo.SectorDataVO">
+        <result property="sector" column="sector" />
+        <result property="spend" column="spend" />
+    </resultMap>
+    <resultMap id="MonthDataResultMap" type="com.main.pojo.vo.MonthDataVO">
+        <result property="date" column="date" />
+        <result property="spend" column="spend" />
+    </resultMap>
 </mapper>

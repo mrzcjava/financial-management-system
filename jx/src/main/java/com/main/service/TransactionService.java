@@ -13,4 +13,6 @@ public interface TransactionService {
     Result<Object> pass(String tid);
 
     Result<Object> unpass(String tid);
+
+    Result<Object> get();
 }

@@ -57,7 +57,9 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtTokenAdminInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/doc.html")
-                .excludePathPatterns("//swagger-resources")
+                .excludePathPatterns("/swagger-resources")
+                .excludePathPatterns("/webjars/**")
+                .excludePathPatterns("/v2/**")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/employee/register")
                 .excludePathPatterns("/tx");

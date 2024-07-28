@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         User userTouch = userMapper.queryUserByEId(employee.getEId());
 
-        if (userTouch != null && userTouch.getRole() == role){
+        if (userTouch != null){
             return Result.error("账号已存在");
         }
         if (ObjUtil.isNull(employee)){
