@@ -4,15 +4,24 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
+import com.main.properties.AliOssProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import java.io.ByteArrayInputStream;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Slf4j
 public class AliOssUtil {
+
+    public AliOssUtil(AliOssProperties aliOssProperties){
+        this.accessKeyId = aliOssProperties.getAccessKeyId();
+        this.endpoint = aliOssProperties.getEndpoint();
+        this.accessKeySecret = aliOssProperties.getAccessKeySecret();
+        this.bucketName = aliOssProperties.getBucketName();
+    }
 
     private String endpoint;
     private String accessKeyId;
@@ -28,12 +37,18 @@ public class AliOssUtil {
      */
     public String upload(byte[] bytes, String objectName) {
 
+        String[] split = objectName.split("\\.");
+
+        String fileName = UUID.randomUUID().toString().replace("-","")
+                + "."
+                + split[split.length-1];
+
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
             // 创建PutObject请求。
-            ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));
+            ossClient.putObject(bucketName, fileName, new ByteArrayInputStream(bytes));
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -59,7 +74,7 @@ public class AliOssUtil {
                 .append(".")
                 .append(endpoint)
                 .append("/")
-                .append(objectName);
+                .append(fileName);
 
         log.info("文件上传到:{}", stringBuilder.toString());
 

@@ -1,21 +1,32 @@
 package com.main.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.main.context.BaseContext;
 import com.main.mapper.TransactionMapper;
 import com.main.pojo.dto.AddTransactionDTO;
 import com.main.pojo.dto.SearchTransactionDTO;
 import com.main.pojo.entity.Transaction;
+import com.main.properties.AliOssProperties;
 import com.main.result.Result;
 import com.main.service.TransactionService;
+import com.main.utils.AliOssUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
     @Resource
     private TransactionMapper transactionMapper;
+    @Resource
+    private AliOssProperties aliOssProperties;
     @Override
     public Result<Object> all(Integer pageNum, SearchTransactionDTO sTrDTO) {
         Page<Transaction> ts;
@@ -26,9 +37,35 @@ public class TransactionServiceImpl implements TransactionService {
         return Result.success(ts);
     }
 
-    // TODO 添加事务
     @Override
     public Result<Object> add(AddTransactionDTO addTrDTO) {
-        return null;
+        System.out.println(addTrDTO);
+
+        Transaction transaction = Transaction.builder()
+                .title(addTrDTO.getTitle())
+                .description(addTrDTO.getDescription())
+                .type(addTrDTO.getType())
+                .spend(BigDecimal.valueOf(addTrDTO.getSpend()))
+                .status(0)
+                .beginTime(LocalDateTime.now())
+                .file(addTrDTO.getFile())
+                .repeat(0)
+                .tId(RandomUtil.randomInt(100000))
+                .uId(BaseContext.getCurrentId().intValue())
+                .build();
+        transactionMapper.addTransaction(transaction);
+        return Result.success("添加成功");
+    }
+
+    @Override
+    public Result<Object> pass(String tid) {
+        transactionMapper.pass(tid);
+        return Result.success();
+    }
+
+    @Override
+    public Result<Object> unpass(String tid) {
+        transactionMapper.unpass(tid);
+        return Result.success();
     }
 }

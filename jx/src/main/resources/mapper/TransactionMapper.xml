@@ -4,6 +4,19 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
 <mapper namespace="com.main.mapper.TransactionMapper">
+    <insert id="addTransaction" parameterType="com.main.pojo.entity.Transaction">
+        insert into transaction values(
+            #{tId},#{uId},#{aId},#{title},#{description},#{spend},#{beginTime},
+            #{endTime},#{file},#{status},#{repeat},#{type},#{img}
+        )
+    </insert>
+    <update id="pass">
+        update transaction set status=1 where t_id=#{tid}
+    </update>
+    <update id="unpass">
+        update transaction set status=2 where t_id=#{tid}
+    </update>
+
     <select id="queryPage" resultType="com.main.pojo.entity.Transaction">
         select * from transaction
         <where>
@@ -17,7 +30,7 @@
                 e_id = #{self}
             </if>
             <if test="keyword != null">
-                like #{keyword}
+                title like #{keyword}
             </if>
         </where>
 

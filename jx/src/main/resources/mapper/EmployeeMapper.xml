@@ -4,9 +4,52 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
 <mapper namespace="com.main.mapper.EmployeeMapper">
+    <insert id="add">
+        insert into employee values(
+        #{eId},
+        #{name},
+        #{sfz},
+        #{position},
+        #{sector},
+        #{salary},
+        #{address},
+        #{beginTime},
+        #{comment},
+        #{type},
+        #{level}
+        )
+    </insert>
+    <update id="update">
+        update employee set
+            name = #{name},
+            position = #{position},
+            sector = #{sector},
+            salary = #{salary}
+        where e_id=#{eId}
+    </update>
+    <update id="setComment">
+        update employee set comment = #{comment} where e_id = #{eid}
+    </update>
+    <delete id="deleteByEId">
+        delete from employee where e_id = #{eid}
+    </delete>
 
 
     <select id="queryEmpByRegisterDTO" resultType="com.main.pojo.entity.Employee">
-        select * from employee where e_id = #{eId} and sfz = #{sfz}
+        select * from employee where e_id = #{empId} and sfz = #{sfz}
+    </select>
+    <select id="queryByEId" resultType="com.main.pojo.entity.Employee" parameterType="java.lang.String">
+        select * from employee where e_id = #{eid}
+    </select>
+    <select id="all" resultType="com.main.pojo.entity.Employee">
+        select * from employee
+        <where>
+            <if test="beginTime != null and endTime != null">
+                between #{beginTime} and #{endTime}
+            </if>
+            <if test="keyword != null">
+                name like #{keyword}
+            </if>
+        </where>
     </select>
 </mapper>

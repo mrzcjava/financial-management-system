@@ -10,4 +10,10 @@ import java.util.List;
 @Mapper
 public interface TransactionMapper {
     Page<Transaction> queryPage(SearchTransactionDTO sTrDTO);
+
+    void addTransaction(Transaction transaction);
+
+    void pass(String tid);
+
+    void unpass(String tid);
 }

@@ -9,4 +9,8 @@ public interface TransactionService {
     Result<Object> all(Integer pageNum, SearchTransactionDTO sTrDTO);
 
     Result<Object> add(AddTransactionDTO addTrDTO);
+
+    Result<Object> pass(String tid);
+
+    Result<Object> unpass(String tid);
 }

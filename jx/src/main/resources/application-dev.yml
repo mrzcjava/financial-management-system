@@ -15,7 +15,7 @@ jx:
     host: 192.168.200.130
     port: 6379
     password: 123456
-    database: 10
+    database: 2
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: jx

@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "事务服务")
 @RequiredArgsConstructor
 @RequestMapping("/tx")
+@CrossOrigin
 @Slf4j
 public class TransactionController {
     private final TransactionService transactionService;
 
     @ApiOperation("查询所有事务")
-    @GetMapping
-    public Result<Object> all(Integer pageNum, SearchTransactionDTO searchTrDTO){
+    @PostMapping
+    public Result<Object> all(Integer pageNum,@RequestBody SearchTransactionDTO searchTrDTO){
         return transactionService.all(pageNum, searchTrDTO);
     }
 
@@ -30,5 +31,17 @@ public class TransactionController {
     @PutMapping
     public Result<Object> add(@RequestBody AddTransactionDTO addTrDTO){
         return transactionService.add(addTrDTO);
+    }
+
+    @ApiOperation("通过审核")
+    @PostMapping("/pass/{tid}")
+    public Result<Object> pass(@PathVariable String tid){
+        return transactionService.pass(tid);
+    }
+
+    @ApiOperation("未通过审核")
+    @PostMapping("/unpass/{tid}")
+    public Result<Object> unpass(@PathVariable String tid){
+        return transactionService.unpass(tid);
     }
 }

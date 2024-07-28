@@ -6,31 +6,29 @@
 <mapper namespace="com.main.mapper.UserMapper">
     <insert id="addNewUser">
         insert into user values(
-            <if test="uId != null">
                 #{uId},
-            </if>
-            <if test="eId != null">
                 #{eId},
-            </if>
-            <if test="icon != null">
                 #{icon},
-            </if>
-            <if test="password != null">
                 #{password},
-            </if>
-            <if test="phone != null">
                 #{phone},
-            </if>
-            <if test="email != null">
                 #{email},
-            </if>
-            <if test="role != null">
-                #{role},
-            </if>
+                #{role}
         )
     </insert>
+    <update id="modifyImg">
+        update user set img = #{path} where e_id = #{eid}
+    </update>
+    <update id="setUid">
+        update user set u_id = #{uid} where e_id = #{eid}
+    </update>
+    <update id="updatePwd">
+        update user set password = #{password} where e_id = #{eid}
+    </update>
 
     <select id="queryUserById" resultType="com.main.pojo.entity.User">
         select * from user where u_id=#{username}
+    </select>
+    <select id="queryUserByEId" resultType="com.main.pojo.entity.User" parameterType="int">
+        select * from user where e_id = #{eId}
     </select>
 </mapper>

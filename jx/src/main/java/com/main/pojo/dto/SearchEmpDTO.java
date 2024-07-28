@@ -5,10 +5,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class SearchTransactionDTO {
-    private Integer status;
+public class SearchEmpDTO {
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
     private String keyword;
-    private Long self;
 }

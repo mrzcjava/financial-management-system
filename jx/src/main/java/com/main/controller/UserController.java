@@ -1,6 +1,8 @@
 package com.main.controller;
 
 import com.main.pojo.dto.LoginDTO;
+import com.main.pojo.dto.ModifyNameAndCommentDTO;
+import com.main.pojo.dto.UpdatePasswordDTO;
 import com.main.result.Result;
 import com.main.service.UserService;
 import io.swagger.annotations.Api;
@@ -24,5 +26,17 @@ public class UserController {
     @PostMapping("/login")
     public Result<Object> login(@RequestBody LoginDTO loginDTO){
         return userService.login(loginDTO);
+    }
+
+    @ApiOperation("更新账户名 uid 和 员工的个性标签")
+    @PostMapping("/modifyNameAndComment")
+    public Result<Object> modifyNameAndComment(@RequestBody ModifyNameAndCommentDTO dto){
+        return userService.modifyNameAndComment(dto);
+    }
+
+    @ApiOperation("修改密码")
+    @PutMapping("/password")
+    public Result<Object> updatePwd(@RequestBody UpdatePasswordDTO dto){
+        return userService.updatePwd(dto);
     }
 }
