@@ -6,11 +6,7 @@ jx:
     database: jx
     username: root
     password: root
-  alioss:
-    access-key-id: LTAI5tM91v4vu8vcDnBTYn9u
-    access-key-secret: mXIJpPxmnVFRmn9UpNlREaf8u5zyPT
-    bucket-name: sky-take-out-acj
-    endpoint: oss-cn-beijing.aliyuncs.com
+
   redis:
     host: 192.168.200.130
     port: 6379

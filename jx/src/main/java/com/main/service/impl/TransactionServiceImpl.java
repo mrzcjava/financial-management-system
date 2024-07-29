@@ -31,7 +31,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Result<Object> all(Integer pageNum, SearchTransactionDTO sTrDTO) {
         Page<Transaction> ts;
 
-        PageHelper.startPage(pageNum, 20);
+        PageHelper.startPage(pageNum, 100);
         ts = transactionMapper.queryPage(sTrDTO);
 
         return Result.success(ts);
